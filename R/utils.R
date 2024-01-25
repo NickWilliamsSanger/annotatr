@@ -8,14 +8,15 @@ TXDBS = c(
     'TxDb.Hsapiens.UCSC.hg38.knownGene',
     'TxDb.Mmusculus.UCSC.mm9.knownGene',
     'TxDb.Mmusculus.UCSC.mm10.knownGene',
+    'TxDb.Mmusculus.UCSC.mm39.knownGene',
     'TxDb.Rnorvegicus.UCSC.rn4.ensGene',
     'TxDb.Rnorvegicus.UCSC.rn5.refGene',
     'TxDb.Rnorvegicus.UCSC.rn6.refGene')
 
 # org.* family of packages
 ORGDBS = data.frame(
-    genome = c('dm3','dm6','galGal5','hg19','hg38','mm9','mm10','rn4','rn5','rn6'),
-    org = c('Dm','Dm','Gg','Hs','Hs','Mm','Mm','Rn','Rn','Rn'),
+    genome = c('dm3','dm6','galGal5','hg19','hg38','mm9','mm10','mm39','rn4','rn5','rn6'),
+    org = c('Dm','Dm','Gg','Hs','Hs','Mm','Mm','Mm','Rn','Rn','Rn'),
     stringsAsFactors = FALSE)
 
 HMMCELLLINES = c('Gm12878','H1hesc','Hepg2','Hmec','Hsmm','Huvec','K562','Nhek','Nhlf')
@@ -98,7 +99,7 @@ builtin_annotations = function() {
             expand.grid('hg19', 'chromatin', chromatin_ends, stringsAsFactors=FALSE),
             1, paste, collapse='_')
 
-        enhancer_codes = c('hg19_enhancers_fantom','hg38_enhancers_fantom','mm9_enhancers_fantom','mm10_enhancers_fantom')
+        enhancer_codes = c('hg19_enhancers_fantom','hg38_enhancers_fantom','mm9_enhancers_fantom','mm10_enhancers_fantom','mm39_enhancers_fantom')
         lncrna_codes = c('hg19_lncrna_gencode','hg38_lncrna_gencode','mm10_lncrna_gencode')
 
         gene_shortcut_codes = apply(

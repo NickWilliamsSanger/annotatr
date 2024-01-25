@@ -241,7 +241,7 @@ build_hmm_annots = function(genome = c('hg19'), annotations = annotatr::builtin_
 #' @param genome The genome assembly.
 #'
 #' @return A \code{GRanges} object.
-build_enhancer_annots = function(genome = c('hg19','hg38','mm9','mm10')) {
+build_enhancer_annots = function(genome = c('hg19','hg38','mm9','mm10','mm39')) {
     # Ensure valid arguments
     genome = match.arg(genome)
 
@@ -274,6 +274,16 @@ build_enhancer_annots = function(genome = c('hg19','hg38','mm9','mm10')) {
 
         enhancers = rtracklayer::liftOver(x = mm9_enhancers, chain = chain)
         enhancers = sort(unlist(enhancers))
+    } else if (genome == 'mm39') {
+      # Create AnnotationHub connection
+      #ah = AnnotationHub::AnnotationHub()
+      #chain = ah[['AH14596']]
+      
+      # Get hg19 enhancers
+      mm9_enhancers = rtracklayer::import.bed('http://fantom.gsc.riken.jp/5/datafiles/phase2.0/extra/Enhancers/mouse_permissive_enhancers_phase_1_and_2.bed.gz', genome = 'mm9')
+      ## nw14 todo - remove hardcoding.
+      enhancers = rtracklayer::liftOver(x = mm9_enhancers, chain = rtracklayer::import.chain(system.file("extdata","mm9ToMm39.over.chain",package="annotatr")))
+      enhancers = sort(unlist(enhancers))
     }
 
     enhancers = GenomicRanges::granges(enhancers)
@@ -317,6 +327,9 @@ build_cpg_annots = function(genome = annotatr::builtin_genomes(), annotations = 
     } else if (genome == 'mm10') {
         use_ah = FALSE
         con = 'http://hgdownload.cse.ucsc.edu/goldenpath/mm10/database/cpgIslandExt.txt.gz'
+    } else if (genome == 'mm39') {
+        use_ah = FALSE
+        con = 'http://hgdownload.cse.ucsc.edu/goldenpath/mm39/database/cpgIslandExt.txt.gz'
     } else if (genome == 'rn6') {
         use_ah = FALSE
         con = 'http://hgdownload.cse.ucsc.edu/goldenpath/rn6/database/cpgIslandExt.txt.gz'
